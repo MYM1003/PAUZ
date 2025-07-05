@@ -3,8 +3,6 @@ import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useNavigate } from 'react-router-dom';
 
 export default function AuthForm() {
@@ -63,100 +61,120 @@ export default function AuthForm() {
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
+      <div className="w-full max-w-md">
+        <div className="text-center mb-8">
           <img 
             src="/lovable-uploads/79a9c951-030b-430e-92fe-0ce9696dfa48.png" 
             alt="PAUZ" 
-            className="h-12 mx-auto mb-4 opacity-90"
+            className="h-8 mx-auto mb-8 opacity-90"
           />
-          <CardTitle className="text-2xl font-bold">
-            {isLogin ? 'Iniciar Sesión' : 'Crear Cuenta'}
-          </CardTitle>
-          <CardDescription>
+          <h1 className="text-3xl font-bold mb-2">
+            {isLogin ? 'Log in to PAUZ' : 'Sign up to PAUZ'}
+          </h1>
+          <p className="text-muted-foreground mb-8">
             {isLogin 
-              ? 'Ingresa a tu cuenta para continuar' 
-              : 'Crea una cuenta nueva para comenzar'
+              ? (
+                <>
+                  Don't have an account?{' '}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsLogin(false);
+                      setError('');
+                    }}
+                    className="text-primary hover:underline font-medium"
+                  >
+                    Sign up
+                  </button>
+                </>
+              ) : (
+                <>
+                  Already have an account?{' '}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsLogin(true);
+                      setError('');
+                    }}
+                    className="text-primary hover:underline font-medium"
+                  >
+                    Log in
+                  </button>
+                </>
+              )
             }
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          </p>
+        </div>
+
+        <div className="resend-card">
+          <form onSubmit={handleSubmit} className="space-y-6">
             {!isLogin && (
-              <div className="space-y-2">
-                <Label htmlFor="fullName">Nombre Completo</Label>
+              <div>
+                <Label htmlFor="fullName" className="text-sm font-medium text-foreground mb-2 block">
+                  Full Name
+                </Label>
                 <Input
                   id="fullName"
                   type="text"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  placeholder="Tu nombre completo"
+                  placeholder="Your full name"
+                  className="resend-input"
                   required={!isLogin}
                 />
               </div>
             )}
             
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+            <div>
+              <Label htmlFor="email" className="text-sm font-medium text-foreground mb-2 block">
+                Email
+              </Label>
               <Input
                 id="email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="tu@email.com"
+                placeholder="your@email.com"
+                className="resend-input"
                 required
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="password">Contraseña</Label>
+            <div>
+              <Label htmlFor="password" className="text-sm font-medium text-foreground mb-2 block">
+                Password
+              </Label>
               <Input
                 id="password"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
+                placeholder="••••••••••••"
+                className="resend-input"
                 required
                 minLength={6}
               />
             </div>
 
             {error && (
-              <Alert variant="destructive">
-                <AlertDescription>{error}</AlertDescription>
-              </Alert>
+              <div className="p-4 bg-destructive/10 border border-destructive/20 rounded-md">
+                <p className="text-destructive text-sm">{error}</p>
+              </div>
             )}
 
             <Button 
               type="submit" 
-              className="w-full" 
+              className="resend-button w-full" 
               disabled={loading}
             >
               {loading 
-                ? (isLogin ? 'Iniciando...' : 'Creando cuenta...') 
-                : (isLogin ? 'Iniciar Sesión' : 'Crear Cuenta')
+                ? (isLogin ? 'Signing in...' : 'Creating account...') 
+                : (isLogin ? 'Log in' : 'Sign up')
               }
             </Button>
-
-            <div className="text-center">
-              <Button
-                type="button"
-                variant="link"
-                onClick={() => {
-                  setIsLogin(!isLogin);
-                  setError('');
-                }}
-                className="text-sm"
-              >
-                {isLogin 
-                  ? '¿No tienes cuenta? Crear una nueva' 
-                  : '¿Ya tienes cuenta? Iniciar sesión'
-                }
-              </Button>
-            </div>
           </form>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }

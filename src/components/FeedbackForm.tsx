@@ -153,19 +153,19 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({
 
   if (needsVerification) {
     return (
-      <div className={`feedback-form ${className}`}>
-        <div className="text-center py-8">
-          <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+      <div className={`${className}`}>
+        <div className="text-center py-12">
+          <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
             <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 7.89a1 1 0 001.42 0L21 7" />
             </svg>
           </div>
-          <h2 className="text-xl font-semibold text-foreground mb-2">¡Revisa tu email!</h2>
-          <p className="text-muted-foreground mb-4">
-            Te enviamos un enlace de verificación a <strong>{formData.email}</strong>
+          <h2 className="text-2xl font-semibold text-foreground mb-4">Check your email</h2>
+          <p className="text-muted-foreground mb-6 text-lg">
+            We sent a verification link to <span className="text-primary font-medium">{formData.email}</span>
           </p>
           <p className="text-sm text-muted-foreground">
-            Una vez que verifiques tu cuenta, podrás comenzar a acumular puntos y acceder a promociones exclusivas.
+            Once you verify your account, you'll start earning points and get access to exclusive promotions.
           </p>
         </div>
       </div>
@@ -173,59 +173,59 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({
   }
 
   return (
-    <div className={`feedback-form ${className}`}>
-      <div className="mb-6 text-center">
-        <h2 className="text-xl font-medium text-foreground mb-2">
-          Tu opinión nos importa
+    <div className={`${className}`}>
+      <div className="mb-8">
+        <h2 className="text-2xl font-semibold text-foreground mb-3">
+          Share your experience
         </h2>
-        <p className="text-sm text-muted-foreground">
-          Comparte tu experiencia con nosotros
+        <p className="text-muted-foreground">
+          Help us improve by sharing your thoughts and feedback.
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <Label htmlFor="email" className="text-sm font-medium text-foreground mb-2 block">
-            Email *
+            Email
           </Label>
           <Input
             id="email"
             type="email"
             value={formData.email}
             onChange={(e) => handleInputChange('email', e.target.value)}
-            placeholder="tu@email.com"
-            className="form-input"
+            placeholder="your@email.com"
+            className="resend-input"
             required
           />
           {errors.email && (
-            <p className="text-destructive text-sm mt-1">{errors.email}</p>
+            <p className="text-destructive text-sm mt-2">{errors.email}</p>
           )}
         </div>
 
         <div>
           <Label htmlFor="name" className="text-sm font-medium text-foreground mb-2 block">
-            Nombre (opcional)
+            Name (Optional)
           </Label>
           <Input
             id="name"
             type="text"
             value={formData.name}
             onChange={(e) => handleInputChange('name', e.target.value)}
-            placeholder="Tu nombre"
-            className="form-input"
+            placeholder="Your name"
+            className="resend-input"
           />
         </div>
 
         <div>
           <Label htmlFor="review" className="text-sm font-medium text-foreground mb-2 block">
-            ¿Cómo fue tu experiencia?
+            How was your experience?
           </Label>
           <Textarea
             id="review"
             value={formData.review}
             onChange={(e) => handleInputChange('review', e.target.value)}
-            placeholder="Cuéntanos sobre tu experiencia..."
-            className="form-textarea"
+            placeholder="Tell us about your experience..."
+            className="resend-input min-h-32 resize-y"
           />
         </div>
 
@@ -240,23 +240,23 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({
             htmlFor="promotions" 
             className="text-sm text-muted-foreground leading-relaxed cursor-pointer"
           >
-            ✅ Acepto sumar puntos y recibir promociones por email
+            I'd like to earn points and receive promotional emails
           </Label>
         </div>
 
-        <div className="pt-4">
+        <div className="pt-2">
           <Button
             type="submit"
             disabled={isLoading}
-            className="submit-button"
+            className="resend-button w-full"
           >
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Enviando...
+                Sending feedback...
               </>
             ) : (
-              'Enviar Feedback'
+              'Send Feedback'
             )}
           </Button>
         </div>
