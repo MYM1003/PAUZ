@@ -69,46 +69,41 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({
     setIsLoading(true);
 
     try {
-      // Generate verification token
-      const verificationToken = crypto.randomUUID();
-      
-      // Save unverified feedback to database
+      // Create user account directly (temporary - skipping email verification)
+      const { data: authData, error: authError } = await supabase.auth.signUp({
+        email: formData.email,
+        password: 'temp123456', // Temporary password
+        options: {
+          data: {
+            full_name: formData.name || 'Usuario'
+          }
+        }
+      });
+
+      if (authError) {
+        console.error('Auth error:', authError);
+        // If user already exists, that's fine - continue with feedback submission
+        if (!authError.message.includes('already registered')) {
+          throw authError;
+        }
+      }
+
+      // Save verified feedback to database
       const { error: dbError } = await supabase
         .from('feedback')
         .insert({
-          user_id: null, // Will be set after verification
+          user_id: authData?.user?.id || null,
           email: formData.email,
           nombre: formData.name || '',
           reseña: formData.review || '',
           acepta_terminos: formData.acceptsPromotions,
-          is_verified: false,
-          verification_token: verificationToken
+          is_verified: true, // Set as verified since we're skipping verification
+          verification_token: null
         });
 
       if (dbError) {
         throw new Error(dbError.message);
       }
-
-      // Send verification email via edge function
-      const { data: emailData, error: emailError } = await supabase.functions.invoke('send-verification-email', {
-        body: {
-          email: formData.email,
-          name: formData.name,
-          verificationToken: verificationToken
-        }
-      });
-
-      if (emailError) {
-        console.error('Verification email failed to send:', emailError);
-        toast({
-          title: "Error",
-          description: "Hubo un problema enviando el email de verificación. Por favor intenta de nuevo.",
-          variant: "destructive"
-        });
-        return;
-      }
-      
-      console.log('Verification email sent successfully:', emailData);
 
       // Also send to webhook if provided (for external integrations)
       if (webhookUrl) {
@@ -140,10 +135,10 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({
         }
       }
 
-      setNeedsVerification(true);
+      setIsSubmitted(true);
       toast({
         title: "¡Gracias!",
-        description: "Hemos recibido tu feedback. Te enviamos un email para verificar tu cuenta y comenzar a acumular puntos.",
+        description: "Hemos recibido tu feedback. Tu cuenta ha sido creada y ya puedes comenzar a acumular puntos.",
       });
 
     } catch (error) {
@@ -158,21 +153,21 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({
     }
   };
 
-  if (needsVerification) {
+  if (isSubmitted) {
     return (
       <div className={`${className}`}>
         <div className="text-center py-12">
           <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
             <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 7.89a1 1 0 001.42 0L21 7" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h2 className="text-2xl font-semibold text-foreground mb-4">Check your email</h2>
+          <h2 className="text-2xl font-semibold text-foreground mb-4">¡Feedback enviado!</h2>
           <p className="text-muted-foreground mb-6 text-lg">
-            We sent a verification link to <span className="text-primary font-medium">{formData.email}</span>
+            Gracias por tu feedback, <span className="text-primary font-medium">{formData.name || formData.email}</span>
           </p>
           <p className="text-sm text-muted-foreground">
-            Once you verify your account, you'll start earning points and get access to exclusive promotions.
+            Tu cuenta ha sido creada y ya puedes comenzar a acumular puntos con cada compra.
           </p>
         </div>
       </div>
