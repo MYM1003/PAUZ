@@ -5,6 +5,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/hooks/useAuth';
+import { supabase } from '@/integrations/supabase/client';
 import { Loader2 } from 'lucide-react';
 
 interface FeedbackFormProps {
@@ -24,10 +26,11 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({
   className = "" 
 }) => {
   const { toast } = useToast();
+  const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState<FormData>({
-    email: '',
+    email: user?.email || '',
     name: '',
     review: '',
     acceptsPromotions: false
@@ -49,6 +52,15 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    if (!user) {
+      toast({
+        title: "Error",
+        description: "Debes estar autenticado para enviar feedback",
+        variant: "destructive"
+      });
+      return;
+    }
+    
     // Validation
     const newErrors: { email?: string } = {};
     if (!formData.email) {
@@ -65,26 +77,48 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({
     setIsLoading(true);
 
     try {
-      const submitData = {
-        email: formData.email,
-        name: formData.name || null,
-        review: formData.review || null,
-        acceptsPromotions: formData.acceptsPromotions,
-        timestamp: new Date().toISOString(),
-        source: 'feedback-form'
-      };
-
-      if (webhookUrl) {
-        const response = await fetch(webhookUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(submitData),
+      // Save to database first
+      const { error: dbError } = await supabase
+        .from('feedback')
+        .insert({
+          user_id: user.id,
+          email: formData.email,
+          nombre: formData.name || '',
+          reseña: formData.review || '',
+          acepta_terminos: formData.acceptsPromotions
         });
 
-        if (!response.ok) {
-          throw new Error('Error al enviar el formulario');
+      if (dbError) {
+        throw new Error(dbError.message);
+      }
+
+      // Also send to webhook if provided (for external integrations)
+      if (webhookUrl) {
+        try {
+          const submitData = {
+            email: formData.email,
+            name: formData.name || null,
+            review: formData.review || null,
+            acceptsPromotions: formData.acceptsPromotions,
+            user_id: user.id,
+            timestamp: new Date().toISOString(),
+            source: 'feedback-form'
+          };
+
+          const response = await fetch(webhookUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(submitData),
+          });
+
+          if (!response.ok) {
+            console.warn('Webhook failed, but database save succeeded');
+          }
+        } catch (webhookError) {
+          console.warn('Webhook failed:', webhookError);
+          // Don't fail the main submission if webhook fails
         }
       }
 
