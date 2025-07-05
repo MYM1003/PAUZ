@@ -15,27 +15,33 @@ export type Database = {
           created_at: string
           email: string
           id: string
+          is_verified: boolean
           nombre: string
           reseña: string
-          user_id: string
+          user_id: string | null
+          verification_token: string | null
         }
         Insert: {
           acepta_terminos?: boolean
           created_at?: string
           email: string
           id?: string
+          is_verified?: boolean
           nombre: string
           reseña: string
-          user_id: string
+          user_id?: string | null
+          verification_token?: string | null
         }
         Update: {
           acepta_terminos?: boolean
           created_at?: string
           email?: string
           id?: string
+          is_verified?: boolean
           nombre?: string
           reseña?: string
-          user_id?: string
+          user_id?: string | null
+          verification_token?: string | null
         }
         Relationships: [
           {
@@ -46,6 +52,33 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      pending_verifications: {
+        Row: {
+          created_at: string
+          email: string
+          expires_at: string
+          feedback_data: Json
+          id: string
+          verification_token: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          expires_at?: string
+          feedback_data: Json
+          id?: string
+          verification_token: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          expires_at?: string
+          feedback_data?: Json
+          id?: string
+          verification_token?: string
+        }
+        Relationships: []
       }
       profiles: {
         Row: {

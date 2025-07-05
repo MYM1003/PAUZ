@@ -29,6 +29,7 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({
   const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [needsVerification, setNeedsVerification] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     email: user?.email || '',
     name: '',
@@ -52,15 +53,6 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!user) {
-      toast({
-        title: "Error",
-        description: "Debes estar autenticado para enviar feedback",
-        variant: "destructive"
-      });
-      return;
-    }
-    
     // Validation
     const newErrors: { email?: string } = {};
     if (!formData.email) {
@@ -77,19 +69,38 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({
     setIsLoading(true);
 
     try {
-      // Save to database first
+      // Generate verification token
+      const verificationToken = crypto.randomUUID();
+      
+      // Save unverified feedback to database
       const { error: dbError } = await supabase
         .from('feedback')
         .insert({
-          user_id: user.id,
+          user_id: null, // Will be set after verification
           email: formData.email,
           nombre: formData.name || '',
           reseña: formData.review || '',
-          acepta_terminos: formData.acceptsPromotions
+          acepta_terminos: formData.acceptsPromotions,
+          is_verified: false,
+          verification_token: verificationToken
         });
 
       if (dbError) {
         throw new Error(dbError.message);
+      }
+
+      // Send verification email via edge function
+      const { error: emailError } = await supabase.functions.invoke('send-verification-email', {
+        body: {
+          email: formData.email,
+          name: formData.name,
+          verificationToken: verificationToken
+        }
+      });
+
+      if (emailError) {
+        console.warn('Verification email failed to send:', emailError);
+        // Don't fail the submission if email fails
       }
 
       // Also send to webhook if provided (for external integrations)
@@ -100,9 +111,9 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({
             name: formData.name || null,
             review: formData.review || null,
             acceptsPromotions: formData.acceptsPromotions,
-            user_id: user.id,
             timestamp: new Date().toISOString(),
-            source: 'feedback-form'
+            source: 'feedback-form',
+            verification_pending: true
           };
 
           const response = await fetch(webhookUrl, {
@@ -122,10 +133,10 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({
         }
       }
 
-      setIsSubmitted(true);
+      setNeedsVerification(true);
       toast({
         title: "¡Gracias!",
-        description: "Hemos recibido tu feedback correctamente.",
+        description: "Hemos recibido tu feedback. Te enviamos un email para verificar tu cuenta y comenzar a acumular puntos.",
       });
 
     } catch (error) {
@@ -140,18 +151,21 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({
     }
   };
 
-  if (isSubmitted) {
+  if (needsVerification) {
     return (
       <div className={`feedback-form ${className}`}>
         <div className="text-center py-8">
           <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
             <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 7.89a1 1 0 001.42 0L21 7" />
             </svg>
           </div>
-          <h2 className="text-xl font-semibold text-foreground mb-2">¡Gracias!</h2>
-          <p className="text-muted-foreground">
-            Hemos recibido tu feedback. Apreciamos mucho tu tiempo.
+          <h2 className="text-xl font-semibold text-foreground mb-2">¡Revisa tu email!</h2>
+          <p className="text-muted-foreground mb-4">
+            Te enviamos un enlace de verificación a <strong>{formData.email}</strong>
+          </p>
+          <p className="text-sm text-muted-foreground">
+            Una vez que verifiques tu cuenta, podrás comenzar a acumular puntos y acceder a promociones exclusivas.
           </p>
         </div>
       </div>
