@@ -127,10 +127,10 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({
   return (
     <div className={`feedback-form ${className}`}>
       <div className="mb-6 text-center">
-        <h2 className="text-2xl font-semibold text-foreground mb-2">
+        <h2 className="text-xl font-medium text-foreground mb-2">
           Tu opinión nos importa
         </h2>
-        <p className="text-muted-foreground">
+        <p className="text-sm text-muted-foreground">
           Comparte tu experiencia con nosotros
         </p>
       </div>
