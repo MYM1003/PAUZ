@@ -64,9 +64,9 @@ export default function AuthForm() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <img 
-            src="/lovable-uploads/79a9c951-030b-430e-92fe-0ce9696dfa48.png" 
+            src="/lovable-uploads/960f4cbc-b30e-4117-8856-b9a36b5d0fcd.png" 
             alt="PAUZ" 
-            className="h-8 mx-auto mb-8 opacity-90"
+            className="h-8 mx-auto mb-8"
           />
           <h1 className="text-3xl font-bold mb-2">
             {isLogin ? 'Log in to PAUZ' : 'Sign up to PAUZ'}

@@ -15,9 +15,9 @@ const Index = () => {
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
               <img 
-                src="/lovable-uploads/79a9c951-030b-430e-92fe-0ce9696dfa48.png" 
+                src="/lovable-uploads/960f4cbc-b30e-4117-8856-b9a36b5d0fcd.png" 
                 alt="PAUZ" 
-                className="h-8 opacity-90"
+                className="h-8"
               />
             </div>
             <Button 

@@ -80,9 +80,9 @@ const Profile = () => {
         <div className="flex justify-between items-center mb-8">
           <div className="flex items-center gap-4">
             <img 
-              src="/lovable-uploads/79a9c951-030b-430e-92fe-0ce9696dfa48.png" 
+              src="/lovable-uploads/960f4cbc-b30e-4117-8856-b9a36b5d0fcd.png" 
               alt="PAUZ" 
-              className="h-10 opacity-90"
+              className="h-10"
             />
             <h1 className="text-2xl font-bold text-foreground">Mi Perfil</h1>
           </div>

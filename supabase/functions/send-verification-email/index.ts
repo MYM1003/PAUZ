@@ -23,11 +23,17 @@ const handler = async (req: Request): Promise<Response> => {
 
   try {
     const { email, name, verificationToken }: VerificationEmailRequest = await req.json();
+    
+    console.log(`Processing verification email for: ${email}`);
 
-    const verificationUrl = `${Deno.env.get("SUPABASE_URL")?.replace('//', '//')}/verify?token=${verificationToken}`;
+    // Construct the correct verification URL using the app domain
+    const appUrl = "https://1c92334a-51f5-4a27-b848-06e237569b08.lovableproject.com";
+    const verificationUrl = `${appUrl}/verify?token=${verificationToken}`;
+    
+    console.log(`Verification URL: ${verificationUrl}`);
 
     const emailResponse = await resend.emails.send({
-      from: "PAUZ <onboarding@resend.dev>",
+      from: "PAUZ <onboarding@resend.dev>", // This works for sandbox mode
       to: [email],
       subject: "¡Verifica tu cuenta y comienza a ganar puntos!",
       html: `
@@ -68,6 +74,11 @@ const handler = async (req: Request): Promise<Response> => {
     });
 
     console.log("Verification email sent successfully:", emailResponse);
+    
+    if (emailResponse.error) {
+      console.error("Resend API error:", emailResponse.error);
+      throw new Error(`Email sending failed: ${emailResponse.error}`);
+    }
 
     return new Response(JSON.stringify(emailResponse), {
       status: 200,

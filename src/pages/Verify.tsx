@@ -172,9 +172,9 @@ const Verify = () => {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <img 
-            src="/lovable-uploads/79a9c951-030b-430e-92fe-0ce9696dfa48.png" 
+            src="/lovable-uploads/960f4cbc-b30e-4117-8856-b9a36b5d0fcd.png" 
             alt="PAUZ" 
-            className="h-12 mx-auto mb-6 opacity-90"
+            className="h-12 mx-auto mb-6"
           />
           <h1 className="text-2xl font-bold text-foreground mb-2">Verifica tu cuenta</h1>
           <p className="text-muted-foreground mb-4">

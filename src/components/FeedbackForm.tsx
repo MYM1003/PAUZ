@@ -90,7 +90,7 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({
       }
 
       // Send verification email via edge function
-      const { error: emailError } = await supabase.functions.invoke('send-verification-email', {
+      const { data: emailData, error: emailError } = await supabase.functions.invoke('send-verification-email', {
         body: {
           email: formData.email,
           name: formData.name,
@@ -99,9 +99,16 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({
       });
 
       if (emailError) {
-        console.warn('Verification email failed to send:', emailError);
-        // Don't fail the submission if email fails
+        console.error('Verification email failed to send:', emailError);
+        toast({
+          title: "Error",
+          description: "Hubo un problema enviando el email de verificación. Por favor intenta de nuevo.",
+          variant: "destructive"
+        });
+        return;
       }
+      
+      console.log('Verification email sent successfully:', emailData);
 
       // Also send to webhook if provided (for external integrations)
       if (webhookUrl) {
