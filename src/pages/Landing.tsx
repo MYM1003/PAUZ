@@ -27,7 +27,7 @@ const Landing = () => {
       const { error } = await supabase.auth.signInWithOtp({
         email: email.trim(),
         options: {
-          emailRedirectTo: `${window.location.origin}/`,
+          emailRedirectTo: `${window.location.origin}/home`,
         },
       });
 
@@ -40,11 +40,8 @@ const Landing = () => {
       } else {
         toast({
           title: "Check your email",
-          description: "We've sent you a verification link to access the platform.",
+          description: "We've sent you a magic link to access your dashboard.",
         });
-        // Store email in localStorage for verification process
-        localStorage.setItem('pending_email', email.trim());
-        navigate('/verify');
       }
     } catch (error) {
       toast({

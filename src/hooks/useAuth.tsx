@@ -25,6 +25,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setSession(session);
         setUser(session?.user ?? null);
         setLoading(false);
+        
+        // Handle successful authentication
+        if (event === 'SIGNED_IN' && session && window.location.pathname === '/') {
+          window.location.href = '/home';
+        }
       }
     );
 

@@ -7,7 +7,7 @@ import { AuthProvider } from "@/hooks/useAuth";
 import Landing from "./pages/Landing";
 import Homepage from "./pages/Homepage";
 import Auth from "./pages/Auth";
-import Verify from "./pages/Verify";
+import VerifySuccess from "./pages/VerifySuccess";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 
@@ -24,7 +24,7 @@ const App = () => (
             <Route path="/" element={<Landing />} />
             <Route path="/home" element={<Homepage />} />
             <Route path="/auth" element={<Auth />} />
-            <Route path="/verify" element={<Verify />} />
+            <Route path="/verify" element={<VerifySuccess />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
