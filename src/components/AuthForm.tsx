@@ -62,7 +62,7 @@ export default function AuthForm() {
           </Button>
           
           <div className="flex items-center space-x-3">
-            <img alt="PAUZ" onClick={() => navigate('/')} src="/lovable-uploads/844cec00-da75-47cf-b187-e1f22ee74677.png" className="h-50 shadow-amber-50 cursor-pointer object-contain" />
+            <img alt="PAUZ" onClick={() => navigate('/')} src="/lovable-uploads/844cec00-da75-47cf-b187-e1f22ee74677.png" className="h-15 w-15 cursor-pointer object-contain" />
             <h1 className="text-xl font-bold text-foreground cursor-pointer" onClick={() => navigate('/')}>
               PAUZ
             </h1>
