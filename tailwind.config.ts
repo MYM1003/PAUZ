@@ -55,6 +55,18 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				red: {
+					accent: 'hsl(var(--red-accent))',
+					muted: 'hsl(var(--red-muted))',
+					subtle: 'hsl(var(--red-subtle))',
+					foreground: 'hsl(var(--red-accent-foreground))'
+				},
+				blue: {
+					accent: 'hsl(var(--blue-accent))',
+					muted: 'hsl(var(--blue-muted))',
+					subtle: 'hsl(var(--blue-subtle))',
+					foreground: 'hsl(var(--blue-accent-foreground))'
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',

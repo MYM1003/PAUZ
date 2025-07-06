@@ -119,7 +119,7 @@ const Verify = () => {
 
       // Redirect to profile after a moment
       setTimeout(() => {
-        navigate('/profile');
+        navigate('/home');
       }, 2000);
 
     } catch (error: any) {
