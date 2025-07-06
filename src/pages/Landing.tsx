@@ -57,43 +57,43 @@ const Landing = () => {
   return (
     <div className="landing-container">
       <div className="landing-card">
-        <div className="text-center mb-8">
+        <div className="text-center mb-10">
           <img 
-            src="/lovable-uploads/960f4cbc-b30e-4117-8856-b9a36b5d0fcd.png" 
+            src="/lovable-uploads/pauz-logo-new.png" 
             alt="PAUZ" 
-            className="h-12 mx-auto mb-6"
+            className="h-16 w-16 mx-auto mb-8 rounded-2xl object-cover"
           />
-          <h1 className="text-3xl font-bold text-foreground mb-3">
+          <h1 className="text-4xl font-bold text-foreground mb-4 leading-tight">
             Welcome to PAUZ
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-lg text-muted-foreground leading-relaxed">
             Enter your email to access your personalized dashboard
           </p>
         </div>
 
-        <form onSubmit={handleEmailSubmit} className="space-y-6">
+        <form onSubmit={handleEmailSubmit} className="space-y-8">
           <div>
             <Input
               type="email"
               placeholder="Enter your email address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="form-input text-center text-lg py-4"
+              className="form-input text-center text-lg w-full"
               disabled={loading}
             />
           </div>
           
           <Button
             type="submit"
-            className="btn-gradient w-full py-4 text-lg font-semibold"
+            className="btn-gradient w-full text-lg"
             disabled={loading}
           >
             {loading ? "Sending..." : "Continue"}
           </Button>
         </form>
 
-        <div className="mt-8 text-center">
-          <p className="text-sm text-muted-foreground">
+        <div className="mt-10 text-center">
+          <p className="text-sm text-muted-foreground leading-relaxed px-4">
             By continuing, you agree to our Terms of Service and Privacy Policy
           </p>
         </div>

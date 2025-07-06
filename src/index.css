@@ -35,12 +35,22 @@
     --input: 0 0% 8%;
     --ring: 152 69% 52%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    /* Resend-inspired design tokens */
+    /* Mobile-optimized design tokens */
     --gradient-primary: linear-gradient(135deg, hsl(152 69% 52%), hsl(152 69% 42%));
     --shadow-glow: 0 0 30px hsl(152 69% 52% / 0.3);
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* iPhone 14 Pro safe areas */
+    --safe-area-top: env(safe-area-inset-top, 44px);
+    --safe-area-bottom: env(safe-area-inset-bottom, 34px);
+    --safe-area-left: env(safe-area-inset-left, 0px);
+    --safe-area-right: env(safe-area-inset-right, 0px);
+    
+    /* Mobile touch targets */
+    --touch-target-min: 44px;
+    --mobile-spacing: 16px;
   }
 
   .dark {
@@ -73,23 +83,96 @@
 
   body {
     @apply bg-background text-foreground font-inter antialiased;
+    /* Mobile optimizations for iPhone */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    overflow-x: hidden;
+  }
+  
+  /* Mobile touch improvements */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Input and button touch targets */
+  input, button, textarea, select {
+    -webkit-user-select: text;
+    user-select: text;
   }
 }
 
 @layer components {
-  .resend-card {
-    @apply bg-card border border-border rounded-lg p-8 shadow-sm;
+  /* Mobile-first container for iPhone 14 Pro */
+  .mobile-container {
+    @apply min-h-screen bg-background;
+    padding-top: var(--safe-area-top);
+    padding-bottom: var(--safe-area-bottom);
+    padding-left: var(--safe-area-left);
+    padding-right: var(--safe-area-right);
   }
   
-  .resend-input {
-    @apply bg-input border border-border rounded-md px-4 py-3 text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200;
+  /* Landing page specific styles */
+  .landing-container {
+    @apply mobile-container flex items-center justify-center px-6;
   }
   
-  .resend-button {
-    @apply bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-6 py-3 rounded-md transition-all duration-200 focus:ring-2 focus:ring-primary/20;
+  .landing-card {
+    @apply w-full max-w-md bg-card/50 backdrop-blur-sm border border-border rounded-2xl p-8 shadow-xl;
   }
-
-  .resend-button-secondary {
-    @apply bg-secondary hover:bg-secondary/80 text-secondary-foreground font-medium px-6 py-3 rounded-md border border-border transition-all duration-200 focus:ring-2 focus:ring-primary/20;
+  
+  /* Mobile-optimized form inputs */
+  .form-input {
+    @apply bg-input border border-border rounded-xl px-6 py-4 text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200;
+    min-height: var(--touch-target-min);
+    font-size: 16px; /* Prevents zoom on iOS */
   }
+  
+  /* Mobile-optimized buttons */
+  .btn-gradient {
+    @apply bg-gradient-to-r from-primary to-accent text-primary-foreground font-semibold rounded-xl transition-all duration-200 focus:ring-2 focus:ring-primary/20 active:scale-95;
+    min-height: var(--touch-target-min);
+    padding: 16px 32px;
+  }
+  
+  .btn-red {
+    @apply bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-semibold rounded-xl transition-all duration-200 focus:ring-2 focus:ring-red-500/20 active:scale-95;
+    min-height: var(--touch-target-min);
+  }
+  
+  .btn-blue {
+    @apply bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-semibold rounded-xl transition-all duration-200 focus:ring-2 focus:ring-blue-500/20 active:scale-95;
+    min-height: var(--touch-target-min);
+  }
+  
+  /* Mobile sections */
+  .section-container {
+    @apply px-6 py-12;
+  }
+  
+  .hero-section {
+    @apply px-6 py-16 text-center;
+  }
+  
+  /* Mobile cards */
+  .feature-card {
+    @apply bg-card/50 backdrop-blur-sm border border-border rounded-2xl p-6 shadow-lg transition-all duration-200;
+  }
+  
+  .stats-card {
+    @apply bg-gradient-to-br from-card to-card/50 border border-border rounded-2xl p-6 shadow-xl;
+  }
+  
+  /* Color system for mobile */
+  .red-subtle { @apply bg-red-500/10; }
+  .red-accent { @apply text-red-500; }
+  .blue-subtle { @apply bg-blue-500/10; }
+  .blue-accent { @apply text-blue-500; }
+  .green-subtle { @apply bg-green-500/10; }
+  .green-accent { @apply text-green-500; }
+  .red-foreground { @apply text-white; }
+  .blue-foreground { @apply text-white; }
 }

@@ -48,40 +48,40 @@ const Homepage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="mobile-container">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-4">
+      <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
+        <div className="px-6 py-4">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center space-x-3">
               <img 
-                src="/lovable-uploads/960f4cbc-b30e-4117-8856-b9a36b5d0fcd.png" 
+                src="/lovable-uploads/pauz-logo-new.png" 
                 alt="PAUZ" 
-                className="h-8"
+                className="h-10 w-10 rounded-xl object-cover"
               />
               <h1 className="text-xl font-bold text-foreground">PAUZ</h1>
             </div>
             
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2">
               {user ? (
                 <>
                   <Button 
                     variant="ghost" 
                     size="sm"
                     onClick={() => navigate('/profile')}
-                    className="flex items-center space-x-2"
+                    className="flex items-center space-x-2 min-h-[44px] px-4"
                   >
                     <User className="h-4 w-4" />
-                    <span>Profile</span>
+                    <span className="hidden sm:block">Profile</span>
                   </Button>
                   <Button 
                     variant="ghost" 
                     size="sm"
                     onClick={handleSignOut}
-                    className="flex items-center space-x-2 text-muted-foreground hover:text-foreground"
+                    className="flex items-center space-x-2 text-muted-foreground hover:text-foreground min-h-[44px] px-4"
                   >
                     <LogOut className="h-4 w-4" />
-                    <span>Sign out</span>
+                    <span className="hidden sm:block">Sign out</span>
                   </Button>
                 </>
               ) : (
@@ -89,11 +89,12 @@ const Homepage = () => {
                   <Button 
                     variant="ghost" 
                     onClick={() => navigate('/auth')}
+                    className="min-h-[44px]"
                   >
                     Sign In
                   </Button>
                   <Button 
-                    className="btn-red"
+                    className="btn-red min-h-[44px]"
                     onClick={() => navigate('/auth')}
                   >
                     Sign Up
@@ -107,24 +108,24 @@ const Homepage = () => {
 
       {/* Hero Section */}
       <section className="hero-section">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-5xl sm:text-6xl font-bold text-foreground mb-8">
+        <div className="max-w-2xl mx-auto">
+          <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-6 leading-tight">
             Earn Points,
             <br />
             <span className="bg-gradient-to-r from-red-accent to-blue-accent bg-clip-text text-transparent">
               Get Rewards
             </span>
           </h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
             Share your experience, write reviews, and earn points that you can redeem for exclusive discounts and promotions.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button className="btn-red px-8 py-4 text-lg">
+          <div className="flex flex-col gap-4 items-center">
+            <Button className="btn-red w-full max-w-xs text-lg">
               <Edit className="mr-2 h-5 w-5" />
               Leave a Review
             </Button>
-            <Button variant="outline" className="px-8 py-4 text-lg border-border hover:bg-secondary">
+            <Button variant="outline" className="w-full max-w-xs text-lg border-border hover:bg-secondary min-h-[44px]">
               Learn More
             </Button>
           </div>
@@ -133,39 +134,39 @@ const Homepage = () => {
 
       {/* How it Works Section */}
       <section className="section-container">
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-foreground mb-4">How It Works</h2>
           <p className="text-muted-foreground text-lg">Simple steps to start earning points</p>
         </div>
         
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="space-y-6">
           <Card className="feature-card text-center">
             <CardContent className="pt-8">
-              <div className="w-12 h-12 bg-red-subtle rounded-full flex items-center justify-center mx-auto mb-4">
-                <Edit className="h-6 w-6 text-red-accent" />
+              <div className="w-16 h-16 bg-red-subtle rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <Edit className="h-8 w-8 text-red-accent" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">1. Share Experience</h3>
-              <p className="text-muted-foreground">Write honest reviews about products and services you've used.</p>
+              <h3 className="text-xl font-semibold mb-3">1. Share Experience</h3>
+              <p className="text-muted-foreground leading-relaxed">Write honest reviews about products and services you've used.</p>
             </CardContent>
           </Card>
           
           <Card className="feature-card text-center">
             <CardContent className="pt-8">
-              <div className="w-12 h-12 bg-blue-subtle rounded-full flex items-center justify-center mx-auto mb-4">
-                <Award className="h-6 w-6 text-blue-accent" />
+              <div className="w-16 h-16 bg-blue-subtle rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <Award className="h-8 w-8 text-blue-accent" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">2. Earn Points</h3>
-              <p className="text-muted-foreground">Get points for reviews, purchases, and referring friends.</p>
+              <h3 className="text-xl font-semibold mb-3">2. Earn Points</h3>
+              <p className="text-muted-foreground leading-relaxed">Get points for reviews, purchases, and referring friends.</p>
             </CardContent>
           </Card>
           
           <Card className="feature-card text-center">
             <CardContent className="pt-8">
-              <div className="w-12 h-12 bg-gradient-to-br from-red-subtle to-blue-subtle rounded-full flex items-center justify-center mx-auto mb-4">
-                <Star className="h-6 w-6 text-foreground" />
+              <div className="w-16 h-16 bg-gradient-to-br from-red-subtle to-blue-subtle rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <Star className="h-8 w-8 text-foreground" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">3. Get Rewards</h3>
-              <p className="text-muted-foreground">Redeem points for discounts, promotions, and exclusive offers.</p>
+              <h3 className="text-xl font-semibold mb-3">3. Get Rewards</h3>
+              <p className="text-muted-foreground leading-relaxed">Redeem points for discounts, promotions, and exclusive offers.</p>
             </CardContent>
           </Card>
         </div>
@@ -174,7 +175,7 @@ const Homepage = () => {
       {/* User Profile & Points Section */}
       {user && (
         <section className="section-container">
-          <div className="grid lg:grid-cols-2 gap-8">
+          <div className="space-y-6">
             {/* Profile Section */}
             <Card className="feature-card">
               <CardHeader>
@@ -196,7 +197,7 @@ const Homepage = () => {
                 </div>
                 <Button 
                   variant="outline" 
-                  className="w-full"
+                  className="w-full min-h-[44px]"
                   onClick={() => navigate('/profile')}
                 >
                   <Settings className="mr-2 h-4 w-4" />
@@ -222,7 +223,7 @@ const Homepage = () => {
                 <div className="space-y-4">
                   <h4 className="font-semibold text-foreground">Recent Activity</h4>
                   {pointsData.activities.map((activity, index) => (
-                    <div key={index} className="flex justify-between items-center py-2 border-b border-border last:border-b-0">
+                    <div key={index} className="flex justify-between items-center py-3 border-b border-border last:border-b-0">
                       <div>
                         <p className="font-medium text-foreground">{activity.type}</p>
                         <p className="text-sm text-muted-foreground">{activity.description}</p>
@@ -242,28 +243,28 @@ const Homepage = () => {
 
       {/* Featured Reviews */}
       <section className="section-container">
-        <div className="text-center mb-12">
+        <div className="text-center mb-10">
           <h2 className="text-3xl font-bold text-foreground mb-4">What Our Users Say</h2>
           <p className="text-muted-foreground text-lg">Real reviews from real customers</p>
         </div>
         
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="space-y-6">
           {featuredReviews.map((review, index) => (
             <Card key={index} className="feature-card">
               <CardContent className="pt-6">
-                <div className="flex items-center space-x-1 mb-3">
+                <div className="flex items-center space-x-1 mb-4">
                   {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
-                      className={`h-4 w-4 ${
+                      className={`h-5 w-5 ${
                         i < review.rating ? 'text-yellow-400 fill-current' : 'text-gray-300'
                       }`}
                     />
                   ))}
                 </div>
-                <p className="text-foreground mb-4">"{review.text}"</p>
+                <p className="text-foreground mb-4 text-lg leading-relaxed">"{review.text}"</p>
                 <div className="flex justify-between items-center text-sm text-muted-foreground">
-                  <span>{review.name}</span>
+                  <span className="font-medium">{review.name}</span>
                   <span>{review.date}</span>
                 </div>
               </CardContent>
@@ -361,17 +362,17 @@ const Homepage = () => {
 
       {/* CTA Section */}
       <section className="section-container text-center">
-        <div className="bg-gradient-to-r from-red-subtle to-blue-subtle rounded-2xl p-12">
+        <div className="bg-gradient-to-r from-red-subtle to-blue-subtle rounded-2xl p-8">
           <h2 className="text-3xl font-bold text-foreground mb-4">Ready to Start Earning?</h2>
-          <p className="text-muted-foreground text-lg mb-8">
+          <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
             Join thousands of users who are already earning points and getting rewards.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button className="btn-red px-8 py-4 text-lg">
+          <div className="flex flex-col gap-4">
+            <Button className="btn-red w-full text-lg">
               <Edit className="mr-2 h-5 w-5" />
               Write Your First Review
             </Button>
-            <Button className="btn-blue px-8 py-4 text-lg">
+            <Button className="btn-blue w-full text-lg">
               <Mail className="mr-2 h-5 w-5" />
               Contact Support
             </Button>
@@ -380,58 +381,50 @@ const Homepage = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-secondary border-t border-border mt-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <div className="flex items-center space-x-2 mb-4">
+      <footer className="bg-secondary border-t border-border mt-12">
+        <div className="px-6 py-12">
+          <div className="space-y-8">
+            <div className="text-center">
+              <div className="flex items-center justify-center space-x-3 mb-4">
                 <img 
-                  src="/lovable-uploads/960f4cbc-b30e-4117-8856-b9a36b5d0fcd.png" 
+                  src="/lovable-uploads/pauz-logo-new.png" 
                   alt="PAUZ" 
-                  className="h-6"
+                  className="h-8 w-8 rounded-lg object-cover"
                 />
-                <span className="font-bold text-foreground">PAUZ</span>
+                <span className="font-bold text-foreground text-xl">PAUZ</span>
               </div>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-muted-foreground text-sm leading-relaxed max-w-sm mx-auto">
                 Your trusted platform for earning rewards through authentic reviews and feedback.
               </p>
             </div>
             
-            <div>
-              <h3 className="font-semibold text-foreground mb-4">Quick Links</h3>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="#" className="hover:text-foreground transition-colors">How it Works</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">Write Review</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">Leaderboard</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">Rewards</a></li>
-              </ul>
+            <div className="grid grid-cols-2 gap-8 text-center">
+              <div>
+                <h3 className="font-semibold text-foreground mb-4">Quick Links</h3>
+                <ul className="space-y-3 text-sm text-muted-foreground">
+                  <li><a href="#" className="hover:text-foreground transition-colors">How it Works</a></li>
+                  <li><a href="#" className="hover:text-foreground transition-colors">Write Review</a></li>
+                  <li><a href="#" className="hover:text-foreground transition-colors">Leaderboard</a></li>
+                  <li><a href="#" className="hover:text-foreground transition-colors">Rewards</a></li>
+                </ul>
+              </div>
+              
+              <div>
+                <h3 className="font-semibold text-foreground mb-4">Support</h3>
+                <ul className="space-y-3 text-sm text-muted-foreground">
+                  <li><a href="#" className="hover:text-foreground transition-colors">Help Center</a></li>
+                  <li><a href="#" className="hover:text-foreground transition-colors">Contact Us</a></li>
+                  <li><a href="#" className="hover:text-foreground transition-colors">Terms & Conditions</a></li>
+                  <li><a href="#" className="hover:text-foreground transition-colors">Privacy Policy</a></li>
+                </ul>
+              </div>
             </div>
             
-            <div>
-              <h3 className="font-semibold text-foreground mb-4">Support</h3>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="#" className="hover:text-foreground transition-colors">Help Center</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">Contact Us</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">Terms & Conditions</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">Privacy Policy</a></li>
-              </ul>
+            <div className="border-t border-border pt-8 text-center">
+              <p className="text-muted-foreground text-sm">
+                © 2024 PAUZ. All rights reserved.
+              </p>
             </div>
-            
-            <div>
-              <h3 className="font-semibold text-foreground mb-4">Connect</h3>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="#" className="hover:text-foreground transition-colors">Twitter</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">Facebook</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">Instagram</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">LinkedIn</a></li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="border-t border-border mt-8 pt-8 text-center">
-            <p className="text-muted-foreground text-sm">
-              © 2024 PAUZ. All rights reserved.
-            </p>
           </div>
         </div>
       </footer>
