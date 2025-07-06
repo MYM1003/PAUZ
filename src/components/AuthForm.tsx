@@ -65,9 +65,9 @@ export default function AuthForm() {
           
           <div className="flex items-center space-x-3">
             <img 
-              src="/lovable-uploads/pauz-brand-logo.png" 
+              src="/lovable-uploads/pauz-logo.png" 
               alt="PAUZ" 
-              className="h-8 w-8 rounded-lg object-cover cursor-pointer"
+              className="h-8 w-8 object-contain cursor-pointer"
               onClick={() => navigate('/')}
             />
             <h1 

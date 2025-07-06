@@ -67,9 +67,9 @@ const Homepage = () => {
             
             <div className="flex items-center space-x-3 absolute left-1/2 transform -translate-x-1/2">
               <img 
-                src="/lovable-uploads/pauz-brand-logo.png" 
+                src="/lovable-uploads/pauz-logo.png" 
                 alt="PAUZ" 
-                className="h-8 w-8 rounded-lg object-cover cursor-pointer"
+                className="h-8 w-8 object-contain cursor-pointer"
                 onClick={() => navigate('/')}
               />
               <h1 
