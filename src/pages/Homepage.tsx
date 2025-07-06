@@ -4,121 +4,105 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
-import { 
-  Star, 
-  Award, 
-  TrendingUp, 
-  Users, 
-  Mail, 
-  Settings,
-  Edit,
-  LogOut,
-  User,
-  ArrowLeft
-} from 'lucide-react';
-
+import { Star, Award, TrendingUp, Users, Mail, Settings, Edit, LogOut, User, ArrowLeft } from 'lucide-react';
 const Homepage = () => {
-  const { user, signOut } = useAuth();
+  const {
+    user,
+    signOut
+  } = useAuth();
   const navigate = useNavigate();
-
   const handleSignOut = async () => {
     await signOut();
     navigate('/');
   };
-
   const pointsData = {
     total: 1250,
-    activities: [
-      { type: 'Review', points: 50, date: '2024-01-15', description: 'Product feedback submitted' },
-      { type: 'Purchase', points: 100, date: '2024-01-10', description: 'Order #12345 completed' },
-      { type: 'Referral', points: 200, date: '2024-01-05', description: 'Friend joined through your link' },
-    ]
+    activities: [{
+      type: 'Review',
+      points: 50,
+      date: '2024-01-15',
+      description: 'Product feedback submitted'
+    }, {
+      type: 'Purchase',
+      points: 100,
+      date: '2024-01-10',
+      description: 'Order #12345 completed'
+    }, {
+      type: 'Referral',
+      points: 200,
+      date: '2024-01-05',
+      description: 'Friend joined through your link'
+    }]
   };
-
-  const featuredReviews = [
-    { name: 'Maria G.', rating: 5, text: 'Amazing quality and fast delivery!', date: '2024-01-14' },
-    { name: 'Carlos R.', rating: 5, text: 'Best customer service I\'ve experienced.', date: '2024-01-13' },
-    { name: 'Ana L.', rating: 4, text: 'Great products, will definitely return.', date: '2024-01-12' },
-  ];
-
-  const topUsers = [
-    { name: 'Isabella M.', points: 2850, rank: 1 },
-    { name: 'Roberto S.', points: 2340, rank: 2 },
-    { name: 'Carmen P.', points: 2100, rank: 3 },
-    { name: 'You', points: 1250, rank: 8 },
-  ];
-
-  return (
-    <div className="mobile-container">
+  const featuredReviews = [{
+    name: 'Maria G.',
+    rating: 5,
+    text: 'Amazing quality and fast delivery!',
+    date: '2024-01-14'
+  }, {
+    name: 'Carlos R.',
+    rating: 5,
+    text: 'Best customer service I\'ve experienced.',
+    date: '2024-01-13'
+  }, {
+    name: 'Ana L.',
+    rating: 4,
+    text: 'Great products, will definitely return.',
+    date: '2024-01-12'
+  }];
+  const topUsers = [{
+    name: 'Isabella M.',
+    points: 2850,
+    rank: 1
+  }, {
+    name: 'Roberto S.',
+    points: 2340,
+    rank: 2
+  }, {
+    name: 'Carmen P.',
+    points: 2100,
+    rank: 3
+  }, {
+    name: 'You',
+    points: 1250,
+    rank: 8
+  }];
+  return <div className="mobile-container">
       {/* Header */}
       <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
         <div className="px-6 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-3">
-              <Button 
-                variant="ghost" 
-                size="sm"
-                onClick={() => window.history.back()}
-                className="flex items-center space-x-1 text-muted-foreground hover:text-foreground min-h-[44px] px-2"
-              >
+              <Button variant="ghost" size="sm" onClick={() => window.history.back()} className="flex items-center space-x-1 text-muted-foreground hover:text-foreground min-h-[44px] px-2">
                 <ArrowLeft className="h-4 w-4" />
               </Button>
             </div>
             
             <div className="flex items-center space-x-3 absolute left-1/2 transform -translate-x-1/2">
-              <img 
-                src="/lovable-uploads/pauz-logo.png" 
-                alt="PAUZ" 
-                className="h-8 w-8 object-contain cursor-pointer"
-                onClick={() => navigate('/')}
-              />
-              <h1 
-                className="text-xl font-bold text-foreground cursor-pointer" 
-                onClick={() => navigate('/')}
-              >
+              <img alt="PAUZ" className="h-8 w-8 object-contain cursor-pointer" onClick={() => navigate('/')} src="/lovable-uploads/60b3a14c-c589-460f-b3b5-6a97c1d417f0.png" />
+              <h1 className="text-xl font-bold text-foreground cursor-pointer" onClick={() => navigate('/')}>
                 PAUZ
               </h1>
             </div>
             
             <div className="flex items-center space-x-2">
-              {user ? (
-                <>
-                  <Button 
-                    variant="ghost" 
-                    size="sm"
-                    onClick={() => navigate('/profile')}
-                    className="flex items-center space-x-2 min-h-[44px] px-4"
-                  >
+              {user ? <>
+                  <Button variant="ghost" size="sm" onClick={() => navigate('/profile')} className="flex items-center space-x-2 min-h-[44px] px-4">
                     <User className="h-4 w-4" />
                     <span className="hidden sm:block">Profile</span>
                   </Button>
-                  <Button 
-                    variant="ghost" 
-                    size="sm"
-                    onClick={handleSignOut}
-                    className="flex items-center space-x-2 text-muted-foreground hover:text-foreground min-h-[44px] px-4"
-                  >
+                  <Button variant="ghost" size="sm" onClick={handleSignOut} className="flex items-center space-x-2 text-muted-foreground hover:text-foreground min-h-[44px] px-4">
                     <LogOut className="h-4 w-4" />
                     <span className="hidden sm:block">Sign out</span>
                   </Button>
-                </>
-              ) : (
-                <>
-                  <Button 
-                    variant="ghost" 
-                    onClick={() => navigate('/auth')}
-                    className="min-h-[44px]"
-                  >
+                </> : <>
+                  <Button variant="ghost" onClick={() => navigate('/auth')} className="min-h-[44px]">
                     Sign In
                   </Button>
-              <Button 
-                className="w-full max-w-xs text-lg min-h-[56px] bg-primary hover:bg-primary/90 text-primary-foreground"
-                onClick={() => navigate('/auth')}
-              >
+              <Button className="w-full max-w-xs text-lg min-h-[56px] bg-primary hover:bg-primary/90 text-primary-foreground" onClick={() => navigate('/auth')}>
                     Sign Up
                   </Button>
-                </>
-              )}
+                </>}
             </div>
           </div>
         </div>
@@ -139,16 +123,11 @@ const Homepage = () => {
           </p>
           
           <div className="flex flex-col gap-4 items-center">
-            <Button 
-              className="w-full max-w-xs text-lg min-h-[56px] bg-accent hover:bg-accent/90 text-accent-foreground"
-            >
+            <Button className="w-full max-w-xs text-lg min-h-[56px] bg-accent hover:bg-accent/90 text-accent-foreground">
               <Edit className="mr-2 h-5 w-5" />
               Leave a Review
             </Button>
-            <Button 
-              variant="outline" 
-              className="w-full max-w-xs text-lg border-border hover:bg-secondary min-h-[44px]"
-            >
+            <Button variant="outline" className="w-full max-w-xs text-lg border-border hover:bg-secondary min-h-[44px]">
               Learn More
             </Button>
           </div>
@@ -196,8 +175,7 @@ const Homepage = () => {
       </section>
 
       {/* User Points Section */}
-      {user && (
-        <section className="section-container">
+      {user && <section className="section-container">
           <div className="space-y-6">
             {/* Points Panel */}
             <Card className="stats-card">
@@ -215,8 +193,7 @@ const Homepage = () => {
               <CardContent>
                 <div className="space-y-4">
                   <h4 className="font-semibold text-foreground">Recent Activity</h4>
-                  {pointsData.activities.map((activity, index) => (
-                    <div key={index} className="flex justify-between items-center py-3 border-b border-border last:border-b-0">
+                  {pointsData.activities.map((activity, index) => <div key={index} className="flex justify-between items-center py-3 border-b border-border last:border-b-0">
                       <div>
                         <p className="font-medium text-foreground">{activity.type}</p>
                         <p className="text-sm text-muted-foreground">{activity.description}</p>
@@ -225,14 +202,12 @@ const Homepage = () => {
                       <Badge variant="outline" className="bg-accent/10 text-accent border-accent">
                         +{activity.points}
                       </Badge>
-                    </div>
-                  ))}
+                    </div>)}
                 </div>
               </CardContent>
             </Card>
           </div>
-        </section>
-      )}
+        </section>}
 
       {/* Featured Reviews */}
       <section className="section-container">
@@ -242,18 +217,10 @@ const Homepage = () => {
         </div>
         
         <div className="space-y-6">
-          {featuredReviews.map((review, index) => (
-            <Card key={index} className="feature-card">
+          {featuredReviews.map((review, index) => <Card key={index} className="feature-card">
               <CardContent className="pt-6">
                 <div className="flex items-center space-x-1 mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className={`h-5 w-5 ${
-                        i < review.rating ? 'text-yellow-400 fill-current' : 'text-gray-300'
-                      }`}
-                    />
-                  ))}
+                  {[...Array(5)].map((_, i) => <Star key={i} className={`h-5 w-5 ${i < review.rating ? 'text-yellow-400 fill-current' : 'text-gray-300'}`} />)}
                 </div>
                 <p className="text-foreground mb-4 text-lg leading-relaxed">"{review.text}"</p>
                 <div className="flex justify-between items-center text-sm text-muted-foreground">
@@ -261,8 +228,7 @@ const Homepage = () => {
                   <span>{review.date}</span>
                 </div>
               </CardContent>
-            </Card>
-          ))}
+            </Card>)}
         </div>
       </section>
 
@@ -282,27 +248,15 @@ const Homepage = () => {
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              {topUsers.map((user, index) => (
-                <div 
-                  key={index} 
-                  className={`flex items-center justify-between p-3 rounded-lg ${
-                    user.name === 'You' ? 'bg-blue-subtle border border-blue-accent' : 'bg-secondary'
-                  }`}
-                >
+              {topUsers.map((user, index) => <div key={index} className={`flex items-center justify-between p-3 rounded-lg ${user.name === 'You' ? 'bg-blue-subtle border border-blue-accent' : 'bg-secondary'}`}>
                   <div className="flex items-center space-x-3">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
-                      user.rank === 1 ? 'bg-yellow-500 text-black' :
-                      user.rank === 2 ? 'bg-gray-400 text-black' :
-                      user.rank === 3 ? 'bg-orange-500 text-black' :
-                      'bg-muted text-muted-foreground'
-                    }`}>
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${user.rank === 1 ? 'bg-yellow-500 text-black' : user.rank === 2 ? 'bg-gray-400 text-black' : user.rank === 3 ? 'bg-orange-500 text-black' : 'bg-muted text-muted-foreground'}`}>
                       {user.rank}
                     </div>
                     <span className="font-medium text-foreground">{user.name}</span>
                   </div>
                   <span className="text-blue-accent font-semibold">{user.points.toLocaleString()} pts</span>
-                </div>
-              ))}
+                </div>)}
             </div>
           </CardContent>
         </Card>
@@ -365,10 +319,7 @@ const Homepage = () => {
                 <Edit className="mr-2 h-5 w-5" />
                 Write Your First Review
               </Button>
-              <Button 
-                variant="outline" 
-                className="w-full text-lg min-h-[56px] border-border hover:bg-secondary"
-              >
+              <Button variant="outline" className="w-full text-lg min-h-[56px] border-border hover:bg-secondary">
                 <Mail className="mr-2 h-5 w-5" />
                 Contact Support
               </Button>
@@ -382,11 +333,7 @@ const Homepage = () => {
           <div className="space-y-8">
             <div className="text-center">
               <div className="flex items-center justify-center space-x-3 mb-4">
-                <img 
-                  src="/lovable-uploads/pauz-logo-new.png" 
-                  alt="PAUZ" 
-                  className="h-8 w-8 rounded-lg object-cover"
-                />
+                <img src="/lovable-uploads/pauz-logo-new.png" alt="PAUZ" className="h-8 w-8 rounded-lg object-cover" />
                 <span className="font-bold text-foreground text-xl">PAUZ</span>
               </div>
               <p className="text-muted-foreground text-sm leading-relaxed max-w-sm mx-auto">
@@ -424,8 +371,6 @@ const Homepage = () => {
           </div>
         </div>
       </footer>
-    </div>
-  );
+    </div>;
 };
-
 export default Homepage;
