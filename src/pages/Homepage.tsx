@@ -13,7 +13,8 @@ import {
   Settings,
   Edit,
   LogOut,
-  User
+  User,
+  ArrowLeft
 } from 'lucide-react';
 
 const Homepage = () => {
@@ -54,12 +55,29 @@ const Homepage = () => {
         <div className="px-6 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-3">
+              <Button 
+                variant="ghost" 
+                size="sm"
+                onClick={() => window.history.back()}
+                className="flex items-center space-x-1 text-muted-foreground hover:text-foreground min-h-[44px] px-2"
+              >
+                <ArrowLeft className="h-4 w-4" />
+              </Button>
+            </div>
+            
+            <div className="flex items-center space-x-3 absolute left-1/2 transform -translate-x-1/2">
               <img 
-                src="/lovable-uploads/pauz-logo-new.png" 
+                src="/lovable-uploads/pauz-brand-logo.png" 
                 alt="PAUZ" 
-                className="h-10 w-10 rounded-xl object-cover"
+                className="h-8 w-8 rounded-lg object-cover cursor-pointer"
+                onClick={() => navigate('/')}
               />
-              <h1 className="text-xl font-bold text-foreground">PAUZ</h1>
+              <h1 
+                className="text-xl font-bold text-foreground cursor-pointer" 
+                onClick={() => navigate('/')}
+              >
+                PAUZ
+              </h1>
             </div>
             
             <div className="flex items-center space-x-2">
@@ -93,10 +111,10 @@ const Homepage = () => {
                   >
                     Sign In
                   </Button>
-                  <Button 
-                    className="btn-red min-h-[44px]"
-                    onClick={() => navigate('/auth')}
-                  >
+              <Button 
+                className="w-full max-w-xs text-lg min-h-[56px] bg-primary hover:bg-primary/90 text-primary-foreground"
+                onClick={() => navigate('/auth')}
+              >
                     Sign Up
                   </Button>
                 </>
@@ -110,9 +128,9 @@ const Homepage = () => {
       <section className="hero-section">
         <div className="max-w-2xl mx-auto">
           <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-6 leading-tight">
-            Earn Points,
+            Earn Points
             <br />
-            <span className="bg-gradient-to-r from-red-accent to-blue-accent bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
               Get Rewards
             </span>
           </h1>
@@ -121,11 +139,16 @@ const Homepage = () => {
           </p>
           
           <div className="flex flex-col gap-4 items-center">
-            <Button className="btn-red w-full max-w-xs text-lg">
+            <Button 
+              className="w-full max-w-xs text-lg min-h-[56px] bg-accent hover:bg-accent/90 text-accent-foreground"
+            >
               <Edit className="mr-2 h-5 w-5" />
               Leave a Review
             </Button>
-            <Button variant="outline" className="w-full max-w-xs text-lg border-border hover:bg-secondary min-h-[44px]">
+            <Button 
+              variant="outline" 
+              className="w-full max-w-xs text-lg border-border hover:bg-secondary min-h-[44px]"
+            >
               Learn More
             </Button>
           </div>
@@ -172,49 +195,19 @@ const Homepage = () => {
         </div>
       </section>
 
-      {/* User Profile & Points Section */}
+      {/* User Points Section */}
       {user && (
         <section className="section-container">
           <div className="space-y-6">
-            {/* Profile Section */}
-            <Card className="feature-card">
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <User className="h-5 w-5" />
-                  <span>Your Profile</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <p className="text-sm text-muted-foreground">Email</p>
-                  <p className="text-foreground">{user.email}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Member Since</p>
-                  <p className="text-foreground">
-                    {new Date(user.created_at).toLocaleDateString()}
-                  </p>
-                </div>
-                <Button 
-                  variant="outline" 
-                  className="w-full min-h-[44px]"
-                  onClick={() => navigate('/profile')}
-                >
-                  <Settings className="mr-2 h-4 w-4" />
-                  Edit Profile
-                </Button>
-              </CardContent>
-            </Card>
-
             {/* Points Panel */}
             <Card className="stats-card">
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
                   <span className="flex items-center space-x-2">
-                    <Award className="h-5 w-5 text-blue-accent" />
+                    <Award className="h-5 w-5 text-accent" />
                     <span>Your Points</span>
                   </span>
-                  <Badge className="bg-blue-accent text-blue-foreground">
+                  <Badge className="bg-accent text-accent-foreground">
                     {pointsData.total.toLocaleString()}
                   </Badge>
                 </CardTitle>
@@ -229,7 +222,7 @@ const Homepage = () => {
                         <p className="text-sm text-muted-foreground">{activity.description}</p>
                         <p className="text-xs text-muted-foreground">{activity.date}</p>
                       </div>
-                      <Badge variant="outline" className="bg-green-subtle text-green-accent border-green-accent">
+                      <Badge variant="outline" className="bg-accent/10 text-accent border-accent">
                         +{activity.points}
                       </Badge>
                     </div>
@@ -362,22 +355,25 @@ const Homepage = () => {
 
       {/* CTA Section */}
       <section className="section-container text-center">
-        <div className="bg-gradient-to-r from-red-subtle to-blue-subtle rounded-2xl p-8">
-          <h2 className="text-3xl font-bold text-foreground mb-4">Ready to Start Earning?</h2>
-          <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
-            Join thousands of users who are already earning points and getting rewards.
-          </p>
-          <div className="flex flex-col gap-4">
-            <Button className="btn-red w-full text-lg">
-              <Edit className="mr-2 h-5 w-5" />
-              Write Your First Review
-            </Button>
-            <Button className="btn-blue w-full text-lg">
-              <Mail className="mr-2 h-5 w-5" />
-              Contact Support
-            </Button>
+          <div className="bg-gradient-to-r from-accent/10 to-primary/10 rounded-2xl p-8 border border-accent/20">
+            <h2 className="text-3xl font-bold text-foreground mb-4">Ready to Start Earning?</h2>
+            <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
+              Join thousands of users who are already earning points and getting rewards.
+            </p>
+            <div className="flex flex-col gap-4">
+              <Button className="w-full text-lg min-h-[56px] bg-accent hover:bg-accent/90 text-accent-foreground">
+                <Edit className="mr-2 h-5 w-5" />
+                Write Your First Review
+              </Button>
+              <Button 
+                variant="outline" 
+                className="w-full text-lg min-h-[56px] border-border hover:bg-secondary"
+              >
+                <Mail className="mr-2 h-5 w-5" />
+                Contact Support
+              </Button>
+            </div>
           </div>
-        </div>
       </section>
 
       {/* Footer */}

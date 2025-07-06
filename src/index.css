@@ -16,30 +16,32 @@
     --popover: 0 0% 6%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 152 69% 52%;
-    --primary-foreground: 0 0% 0%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 3%;
 
-    --secondary: 0 0% 10%;
+    --secondary: 0 0% 8%;
     --secondary-foreground: 0 0% 90%;
 
     --muted: 0 0% 8%;
     --muted-foreground: 0 0% 60%;
 
-    --accent: 152 69% 52%;
-    --accent-foreground: 0 0% 0%;
+    --accent: 120 100% 50%;
+    --accent-foreground: 0 0% 3%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 15%;
-    --input: 0 0% 8%;
-    --ring: 152 69% 52%;
+    --border: 0 0% 12%;
+    --input: 0 0% 6%;
+    --ring: 0 0% 98%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
 
     /* Mobile-optimized design tokens */
-    --gradient-primary: linear-gradient(135deg, hsl(152 69% 52%), hsl(152 69% 42%));
-    --shadow-glow: 0 0 30px hsl(152 69% 52% / 0.3);
+    --gradient-primary: linear-gradient(135deg, hsl(0 0% 98%), hsl(0 0% 90%));
+    --gradient-accent: linear-gradient(135deg, hsl(120 100% 50%), hsl(120 100% 40%));
+    --shadow-glow: 0 0 30px hsl(120 100% 50% / 0.2);
+    --shadow-card: 0 4px 6px -1px hsl(0 0% 0% / 0.1), 0 2px 4px -1px hsl(0 0% 0% / 0.06);
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     
     /* iPhone 14 Pro safe areas */

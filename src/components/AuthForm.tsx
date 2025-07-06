@@ -1,19 +1,21 @@
-import { useState } from 'react';
-import { useAuth } from '@/hooks/useAuth';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/hooks/useAuth';
+import { useToast } from '@/hooks/use-toast';
+import { ArrowLeft } from 'lucide-react';
 
 export default function AuthForm() {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [fullName, setFullName] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { signIn, signUp } = useAuth();
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,36 +26,24 @@ export default function AuthForm() {
       if (isLogin) {
         const { error } = await signIn(email, password);
         if (error) {
-          if (error.message.includes('Invalid login credentials')) {
-            setError('Email o contraseña incorrectos');
-          } else {
-            setError(error.message);
-          }
+          setError(error.message);
         } else {
           navigate('/');
         }
       } else {
-        if (!fullName.trim()) {
-          setError('El nombre completo es requerido');
-          setLoading(false);
-          return;
-        }
-        
-        const { error } = await signUp(email, password, fullName);
+        const { error } = await signUp(email, password, '');
         if (error) {
-          if (error.message.includes('User already registered')) {
-            setError('Este email ya está registrado');
-          } else {
-            setError(error.message);
-          }
+          setError(error.message);
         } else {
-          setError('');
-          alert('¡Cuenta creada exitosamente! Por favor verifica tu email para activar tu cuenta.');
+          toast({
+            title: "Check your email",
+            description: "We've sent you a verification link to activate your account.",
+          });
           setIsLogin(true);
         }
       }
     } catch (err) {
-      setError('Ha ocurrido un error inesperado');
+      setError('An unexpected error occurred');
     }
 
     setLoading(false);
@@ -62,14 +52,38 @@ export default function AuthForm() {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="w-full max-w-md">
+        {/* Header with go back and centered logo */}
+        <div className="flex items-center justify-between mb-8">
+          <Button 
+            variant="ghost" 
+            size="sm"
+            onClick={() => navigate('/')}
+            className="flex items-center space-x-1 text-muted-foreground hover:text-foreground"
+          >
+            <ArrowLeft className="h-4 w-4" />
+          </Button>
+          
+          <div className="flex items-center space-x-3">
+            <img 
+              src="/lovable-uploads/pauz-brand-logo.png" 
+              alt="PAUZ" 
+              className="h-8 w-8 rounded-lg object-cover cursor-pointer"
+              onClick={() => navigate('/')}
+            />
+            <h1 
+              className="text-xl font-bold text-foreground cursor-pointer" 
+              onClick={() => navigate('/')}
+            >
+              PAUZ
+            </h1>
+          </div>
+          
+          <div className="w-10"></div> {/* Spacer for centering */}
+        </div>
+
         <div className="text-center mb-8">
-          <img 
-            src="/lovable-uploads/960f4cbc-b30e-4117-8856-b9a36b5d0fcd.png" 
-            alt="PAUZ" 
-            className="h-8 mx-auto mb-8"
-          />
-          <h1 className="text-3xl font-bold mb-2">
-            {isLogin ? 'Log in to PAUZ' : 'Sign up to PAUZ'}
+          <h1 className="text-3xl font-bold mb-2 text-foreground">
+            {isLogin ? 'Sign in to PAUZ' : 'Create your account'}
           </h1>
           <p className="text-muted-foreground mb-8">
             {isLogin 
@@ -82,7 +96,7 @@ export default function AuthForm() {
                       setIsLogin(false);
                       setError('');
                     }}
-                    className="text-primary hover:underline font-medium"
+                    className="text-accent hover:underline font-medium"
                   >
                     Sign up
                   </button>
@@ -96,9 +110,9 @@ export default function AuthForm() {
                       setIsLogin(true);
                       setError('');
                     }}
-                    className="text-primary hover:underline font-medium"
+                    className="text-accent hover:underline font-medium"
                   >
-                    Log in
+                    Sign in
                   </button>
                 </>
               )
@@ -106,25 +120,8 @@ export default function AuthForm() {
           </p>
         </div>
 
-        <div className="resend-card">
+        <div className="bg-card border border-border rounded-lg p-6">
           <form onSubmit={handleSubmit} className="space-y-6">
-            {!isLogin && (
-              <div>
-                <Label htmlFor="fullName" className="text-sm font-medium text-foreground mb-2 block">
-                  Full Name
-                </Label>
-                <Input
-                  id="fullName"
-                  type="text"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  placeholder="Your full name"
-                  className="resend-input"
-                  required={!isLogin}
-                />
-              </div>
-            )}
-            
             <div>
               <Label htmlFor="email" className="text-sm font-medium text-foreground mb-2 block">
                 Email
@@ -135,7 +132,7 @@ export default function AuthForm() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="your@email.com"
-                className="resend-input"
+                className="bg-input border-border text-foreground min-h-[48px]"
                 required
               />
             </div>
@@ -150,7 +147,7 @@ export default function AuthForm() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••••••"
-                className="resend-input"
+                className="bg-input border-border text-foreground min-h-[48px]"
                 required
                 minLength={6}
               />
@@ -164,16 +161,22 @@ export default function AuthForm() {
 
             <Button 
               type="submit" 
-              className="resend-button w-full" 
+              className="w-full min-h-[48px] bg-primary hover:bg-primary/90 text-primary-foreground" 
               disabled={loading}
             >
               {loading 
                 ? (isLogin ? 'Signing in...' : 'Creating account...') 
-                : (isLogin ? 'Log in' : 'Sign up')
+                : (isLogin ? 'Sign in' : 'Create account')
               }
             </Button>
           </form>
         </div>
+        
+        {!isLogin && (
+          <p className="text-center text-sm text-muted-foreground mt-6">
+            After creating your account, verify your email to start earning points!
+          </p>
+        )}
       </div>
     </div>
   );
