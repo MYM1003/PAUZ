@@ -333,7 +333,7 @@ const Homepage = () => {
           <div className="space-y-8">
             <div className="text-center">
               <div className="flex items-center justify-center space-x-3 mb-4">
-                <img src="/lovable-uploads/pauz-logo-new.png" alt="PAUZ" className="h-8 w-8 rounded-lg object-cover" />
+                <img alt="PAUZ" className="h-8 w-8 rounded-lg object-cover" src="/lovable-uploads/4e97b1eb-464e-48dc-827b-842164401c6f.png" />
                 <span className="font-bold text-foreground text-xl">PAUZ</span>
               </div>
               <p className="text-muted-foreground text-sm leading-relaxed max-w-sm mx-auto">
