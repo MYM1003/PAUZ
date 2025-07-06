@@ -1,7 +1,7 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'app.lovable.1c92334a51f54a27b84806e237569b08',
+  appId: 'com.lovable.nocherojaFeedback',
   appName: 'noche-roja-feedback',
   webDir: 'dist',
   server: {
